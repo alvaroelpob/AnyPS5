@@ -1562,11 +1562,6 @@ int APS5_VABI UI_method_set_closer_nid_postfix(void) {
     return 0;
 }
 
-int APS5_VABI UI_method_set_opener_nid_postfix(void) {
-    NotImplemented_nid_no_patch(__func__);
-    return 0;
-}
-
 int APS5_VABI UI_method_set_reader_nid_postfix(void) {
     NotImplemented_nid_no_patch(__func__);
     return 0;
