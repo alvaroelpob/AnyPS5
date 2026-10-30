@@ -4,21 +4,6 @@
 #include "prx/libSceLibreSsl3/include/Key.hpp"
 #include "prx/libSceLibreSsl/include/Api.hpp"
 
-struct LibreSsl3Rsa {
-    int pad;
-    std::int64_t version;
-    const void* meth;
-    const void* n;
-    const void* e;
-    const void* d;
-    const void* p;
-    const void* q;
-    const void* dmp1;
-    const void* dmq1;
-    const void* iqmp;
-    unsigned char rest[64];
-};
-
 struct LibreSsl3Dh {
     int pad;
     int version;
