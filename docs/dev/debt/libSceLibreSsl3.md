@@ -40,6 +40,7 @@
 - [X509_getm_notBefore, X509_getm_notAfter, X509_get0_notBefore, X509_get0_notAfter, X509_get0_signature](../../../core/libs/prx/libSceLibreSsl3/src/X509Validity.cpp) (libSceLibreSsl3) - nothing is checked on the console. The `X509`, `X509_CINF` and `X509_VAL` layouts and the results follow [LibreSSL 4.0.0](https://github.com/libressl/openbsd/tree/ce488b78e0bd994780569df718596b9776ff681a/src/lib/libcrypto) `x509_local.h`, `x509_set.c` and `x_x509.c`, the version in the [firmware 13.40 measurements](https://github.com/boykopovar/AnyPS5/discussions/8981#discussioncomment-19111214). No export of this module creates a certificate yet, so only certificates the caller builds reach them. A null certificate in `X509_get0_signature` throws when an output is requested, where LibreSSL dereferences it; with both outputs null the call returns without reading the certificate, as in LibreSSL
 
 - [ASN1_TIME_diff](../../../core/libs/prx/libSceLibreSsl3/src/Time.cpp) has no console ABI or behavior verification. Its signature and date rules follow LibreSSL 4.0.0 [a_time.c](https://github.com/libressl/openbsd/blob/ce488b78e0bd994780569df718596b9776ff681a/src/lib/libcrypto/asn1/a_time.c), [a_time_tm.c](https://github.com/libressl/openbsd/blob/ce488b78e0bd994780569df718596b9776ff681a/src/lib/libcrypto/asn1/a_time_tm.c) and [a_time_posix.c](https://github.com/libressl/openbsd/blob/ce488b78e0bd994780569df718596b9776ff681a/src/lib/libcrypto/asn1/a_time_posix.c), using the existing 24-byte string layout. Null inputs use the host wall clock; the console clock relationship is unverified. Null output pointers throw after valid input parsing, where the reference dereferences them. Closes when: measured on a PS5.
+- [DES_set_key_unchecked](../../../core/libs/prx/libSceLibreSsl3/src/DesKey.cpp) (libSceLibreSsl3) - nothing is checked on the console. [LibreSSL 4.0.0](https://github.com/libressl/openbsd/blob/ce488b78e0bd994780569df718596b9776ff681a/src/lib/libcrypto/des/des_key.c#L311-L345) `des_key.c` builds the schedule without parity or weak-key checks, which is what `DES_set_key` does while `DES_check_key` is 0. It fills the schedule through the forwarded libSceLibreSsl `DES_set_key`, so it inherits that function's 128-byte layout (the key followed by zeros, not the precomputed subkeys) and the forwarded `DES_ecb_encrypt` reads it. Closes when: compared with the console.
 
 - [tls_config_parse_protocols](../../../core/libs/prx/libSceLibreSsl3/src/TlsProtocols.cpp) has no independent console execution or TLS configuration interoperability verification. Parsing follows [LibreSSL 4.0.0](https://github.com/libressl/openbsd/tree/ce488b78e0bd994780569df718596b9776ff681a/src/lib/libtls). A null output pointer throws instead of an upstream fault. Tests use caller-owned text/output and guest-heap allocation failure; other TLS configuration and handshake exports remain unimplemented. Closes when: console grammar and TLS configuration interoperability are measured.
 
@@ -49,7 +50,7 @@
 
 ### Additional callable export inventory
 
-- [Additional exports](../../../core/libs/prx/libSceLibreSsl3/AdditionalExports.cpp) declare 165 remaining callable exports: 155 named and 10 known only by NID. Every entry throws. Parameterless `int` declarations are unknown-signature placeholders, not verified ABI contracts. Names/NIDs match the 13.60 export table. No functional implementation or title unblock is claimed.
+- [Additional exports](../../../core/libs/prx/libSceLibreSsl3/AdditionalExports.cpp) declare 174 remaining callable exports: 164 155 named and 10 known only by NID. Every entry throws. Parameterless `int` declarations are unknown-signature placeholders, not verified ABI contracts. Names/NIDs match the 13.60 export table. No functional implementation or title unblock is claimed.
 
 | Name | NID |
 | --- | --- |
@@ -108,7 +109,6 @@
 | `EVP_PKEY_verify` | `HEuvmk+aHs4` |
 | `X509_set_version` | `IOutZPRNNPo` |
 | `d2i_SSL_SESSION` | `IiG4HLr+cOw` |
-| `DES_set_key_unchecked` | `J437jVn9pjI` |
 | `EVP_PKEY_CTX_new_id` | `J5ZLHxWkT6k` |
 | `RSAPublicKey_dup` | `JSqFTYGaWhU` |
 | `AES_unwrap_key` | `JvoQz7GYOMo` |
