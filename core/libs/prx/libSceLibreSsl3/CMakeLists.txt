@@ -16,6 +16,7 @@ target_sources(libSceLibreSsl3 PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/PkeyGette
 target_sources(libSceLibreSsl3 PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/LibTls.cpp)
 target_sources(libSceLibreSsl3 PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/Time.cpp)
 target_sources(libSceLibreSsl3 PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/DigestNames.cpp)
+target_sources(libSceLibreSsl3 PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/Sha512_256.cpp)
 
 if(BUILD_TESTING)
     add_test_executable(guest_libressl3_libtls_settings_tests ${CMAKE_CURRENT_SOURCE_DIR}/tests/LibTlsSettings.cpp)
