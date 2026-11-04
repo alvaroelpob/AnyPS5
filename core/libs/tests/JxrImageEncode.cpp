@@ -105,4 +105,8 @@ int main() {
         Require(PKImageEncode_SetColorContext_nid_postfix(nullptr, context, 4) == -2);
         Require(PKImageEncode_SetColorContext_nid_postfix(nullptr, nullptr, 0) == -2);
     }
+    {
+        int metadata = 0;
+        Require(PKImageEncode_SetDescriptiveMetadata_nid_postfix(nullptr, &metadata) == -2);
+    }
 }
