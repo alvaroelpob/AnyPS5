@@ -11,10 +11,23 @@ namespace {
 constexpr std::int64_t Success = 0;
 constexpr std::int64_t NotYetImplemented = -2;
 constexpr std::int64_t AbstractMethod = -3;
+constexpr std::int64_t OutOfMemory = -101;
 
 Jxr::ImageEncode* Encoder(Jxr::ImageEncode* encoder, const char* function) {
     if (!encoder) throw std::invalid_argument(std::string(function) + " requires an encoder");
     return encoder;
+}
+
+std::int64_t APS5_VABI WritePixelsBandedBegin(Jxr::ImageEncode*, Jxr::Stream*) {
+    return AbstractMethod;
+}
+
+std::int64_t APS5_VABI WritePixelsBanded(Jxr::ImageEncode*, std::uint32_t, std::uint8_t*, std::uint32_t, std::int32_t) {
+    return AbstractMethod;
+}
+
+std::int64_t APS5_VABI WritePixelsBandedEnd(Jxr::ImageEncode*) {
+    return AbstractMethod;
 }
 
 }
@@ -65,6 +78,28 @@ std::int64_t APS5_VABI PKImageEncode_Release_nid_postfix(Jxr::ImageEncode** enco
         throw std::invalid_argument("PKImageEncode_Release requires an encoder with a stream");
     (*encoder)->stream->close(&(*encoder)->stream);
     return PKFree_nid_postfix(reinterpret_cast<void**>(encoder));
+}
+
+std::int64_t APS5_VABI PKImageEncode_Create_nid_postfix(Jxr::ImageEncode** encoder) {
+    if (!encoder) throw std::invalid_argument("PKImageEncode_Create requires an output");
+    *encoder = static_cast<Jxr::ImageEncode*>(calloc_nid_postfix(1, sizeof(Jxr::ImageEncode)));
+    if (!*encoder) return OutOfMemory;
+    auto* created = *encoder;
+    created->initialize = &PKImageEncode_Initialize_nid_postfix;
+    created->terminate = reinterpret_cast<decltype(created->terminate)>(&PKImageEncode_Terminate_nid_postfix);
+    created->setPixelFormat = &PKImageEncode_SetPixelFormat_nid_postfix;
+    created->setSize = &PKImageEncode_SetSize_nid_postfix;
+    created->setResolution = &PKImageEncode_SetResolution_nid_postfix;
+    created->setColorContext = &PKImageEncode_SetColorContext_nid_postfix;
+    created->setDescriptiveMetadata = &PKImageEncode_SetDescriptiveMetadata_nid_postfix;
+    created->writePixels = &PKImageEncode_WritePixels_nid_postfix;
+    created->writePixelsBandedBegin = &WritePixelsBandedBegin;
+    created->writePixelsBanded = &WritePixelsBanded;
+    created->writePixelsBandedEnd = &WritePixelsBandedEnd;
+    created->createNewFrame = reinterpret_cast<decltype(created->createNewFrame)>(&PKImageEncode_CreateNewFrame_nid_postfix);
+    created->release = &PKImageEncode_Release_nid_postfix;
+    created->wmp = 0;
+    return Success;
 }
 
 }

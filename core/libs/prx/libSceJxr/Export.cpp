@@ -281,10 +281,6 @@ int APS5_VABI PKImageEncode_Create_WMP_nid_postfix() {
     NotImplemented_nid_no_patch(__func__);
 }
 
-int APS5_VABI PKImageEncode_Create_nid_postfix() {
-    NotImplemented_nid_no_patch(__func__);
-}
-
 int APS5_VABI PKImageEncode_SetEXIFMetadata_WMP_nid_postfix() {
     NotImplemented_nid_no_patch(__func__);
 }
