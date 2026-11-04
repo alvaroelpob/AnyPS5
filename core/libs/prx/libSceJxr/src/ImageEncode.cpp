@@ -30,4 +30,10 @@ std::int64_t APS5_VABI PKImageEncode_SetSize_nid_postfix(Jxr::ImageEncode* encod
     return Success;
 }
 
+std::int64_t APS5_VABI PKImageEncode_SetResolution_nid_postfix(Jxr::ImageEncode* encoder, float horizontal, float vertical) {
+    Encoder(encoder, __func__)->resolutionX = horizontal;
+    encoder->resolutionY = vertical;
+    return Success;
+}
+
 }

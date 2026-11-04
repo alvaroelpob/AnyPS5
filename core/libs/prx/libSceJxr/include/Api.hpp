@@ -94,7 +94,7 @@ int APS5_VABI PKImageEncode_SetGPSInfoMetadata_WMP_nid_postfix();
 int APS5_VABI PKImageEncode_SetIPTCNAAMetadata_WMP_nid_postfix();
 int APS5_VABI PKImageEncode_SetPhotoshopMetadata_WMP_nid_postfix();
 std::int64_t APS5_VABI PKImageEncode_SetPixelFormat_nid_postfix(Jxr::ImageEncode* encoder, JxrGuestGuid format);
-int APS5_VABI PKImageEncode_SetResolution_nid_postfix();
+std::int64_t APS5_VABI PKImageEncode_SetResolution_nid_postfix(Jxr::ImageEncode* encoder, float horizontal, float vertical);
 std::int64_t APS5_VABI PKImageEncode_SetSize_nid_postfix(Jxr::ImageEncode* encoder, std::int32_t width, std::int32_t height);
 int APS5_VABI PKImageEncode_SetXMPMetadata_WMP_nid_postfix();
 int APS5_VABI PKImageEncode_Terminate_nid_postfix();
