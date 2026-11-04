@@ -94,4 +94,10 @@ int main() {
         Require(encoder->currentLine == 0);
         free_nid_postfix(encoder);
     }
+    {
+        auto* encoder = NewEncoder();
+        Require(PKImageEncode_SetResolution_nid_postfix(encoder, 72.5f, -300.0f) == 0);
+        Require(encoder->resolutionX == 72.5f && encoder->resolutionY == -300.0f && encoder->frames == 0);
+        free_nid_postfix(encoder);
+    }
 }
