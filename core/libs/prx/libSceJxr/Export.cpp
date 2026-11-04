@@ -293,10 +293,6 @@ int APS5_VABI PKImageEncode_Release_nid_postfix() {
     NotImplemented_nid_no_patch(__func__);
 }
 
-int APS5_VABI PKImageEncode_SetColorContext_nid_postfix() {
-    NotImplemented_nid_no_patch(__func__);
-}
-
 int APS5_VABI PKImageEncode_SetDescriptiveMetadata_nid_postfix() {
     NotImplemented_nid_no_patch(__func__);
 }
