@@ -321,10 +321,6 @@ int APS5_VABI PKImageEncode_Transcode_nid_postfix() {
     NotImplemented_nid_no_patch(__func__);
 }
 
-int APS5_VABI PKImageEncode_WritePixels_nid_postfix() {
-    NotImplemented_nid_no_patch(__func__);
-}
-
 int APS5_VABI PKImageEncode_WriteSource_nid_postfix() {
     NotImplemented_nid_no_patch(__func__);
 }

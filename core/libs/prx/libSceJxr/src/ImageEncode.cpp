@@ -10,6 +10,7 @@ namespace {
 
 constexpr std::int64_t Success = 0;
 constexpr std::int64_t NotYetImplemented = -2;
+constexpr std::int64_t AbstractMethod = -3;
 
 Jxr::ImageEncode* Encoder(Jxr::ImageEncode* encoder, const char* function) {
     if (!encoder) throw std::invalid_argument(std::string(function) + " requires an encoder");
@@ -43,6 +44,10 @@ std::int64_t APS5_VABI PKImageEncode_SetColorContext_nid_postfix(Jxr::ImageEncod
 
 std::int64_t APS5_VABI PKImageEncode_SetDescriptiveMetadata_nid_postfix(Jxr::ImageEncode*, const void*) {
     return NotYetImplemented;
+}
+
+std::int64_t APS5_VABI PKImageEncode_WritePixels_nid_postfix(Jxr::ImageEncode*, std::uint32_t, std::uint8_t*, std::uint32_t) {
+    return AbstractMethod;
 }
 
 }

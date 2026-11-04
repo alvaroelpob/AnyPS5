@@ -99,7 +99,7 @@ std::int64_t APS5_VABI PKImageEncode_SetSize_nid_postfix(Jxr::ImageEncode* encod
 int APS5_VABI PKImageEncode_SetXMPMetadata_WMP_nid_postfix();
 int APS5_VABI PKImageEncode_Terminate_nid_postfix();
 int APS5_VABI PKImageEncode_Transcode_nid_postfix();
-int APS5_VABI PKImageEncode_WritePixels_nid_postfix();
+std::int64_t APS5_VABI PKImageEncode_WritePixels_nid_postfix(Jxr::ImageEncode* encoder, std::uint32_t lines, std::uint8_t* pixels, std::uint32_t stride);
 int APS5_VABI PKImageEncode_WriteSource_nid_postfix();
 int APS5_VABI ReadWS_File_nid_postfix();
 int APS5_VABI ReadWS_List_nid_postfix();
