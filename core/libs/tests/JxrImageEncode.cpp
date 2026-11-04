@@ -113,4 +113,18 @@ int main() {
         std::uint8_t pixels[12] {};
         Require(PKImageEncode_WritePixels_nid_postfix(nullptr, 1, pixels, 12) == -3);
     }
+    {
+        auto* encoder = NewEncoder();
+        Jxr::Stream stream {};
+        stream.getPosition = &GetPosition;
+        Require(PKImageEncode_Initialize_nid_postfix(encoder, &stream, nullptr, 0) == 0);
+        Require(encoder->stream == &stream && encoder->start == 42 && encoder->frames == 1);
+        Require(encoder->resolutionX == 96.0f && encoder->resolutionY == 96.0f);
+        Require(std::memcmp(&encoder->pixelFormat, &DontCare, 16) == 0);
+        positionResult = -102;
+        encoder->start = 0;
+        Require(PKImageEncode_Initialize_nid_postfix(encoder, &stream, nullptr, 0) == -102 && encoder->start == 42);
+        positionResult = 0;
+        free_nid_postfix(encoder);
+    }
 }
