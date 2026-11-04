@@ -45,4 +45,8 @@ std::int64_t APS5_VABI GetPosWS_File_nid_postfix(Jxr::Stream* stream, std::size_
     return Success;
 }
 
+int APS5_VABI EOSWS_File_nid_postfix(Jxr::Stream* stream) {
+    return feof_nid_postfix(File(stream, __func__));
+}
+
 }
