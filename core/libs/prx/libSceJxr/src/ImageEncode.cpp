@@ -60,4 +60,11 @@ std::int64_t APS5_VABI PKImageEncode_Initialize_nid_postfix(Jxr::ImageEncode* en
     return stream->getPosition(stream, &encoder->start);
 }
 
+std::int64_t APS5_VABI PKImageEncode_Release_nid_postfix(Jxr::ImageEncode** encoder) {
+    if (!encoder || !*encoder || !(*encoder)->stream || !(*encoder)->stream->close)
+        throw std::invalid_argument("PKImageEncode_Release requires an encoder with a stream");
+    (*encoder)->stream->close(&(*encoder)->stream);
+    return PKFree_nid_postfix(reinterpret_cast<void**>(encoder));
+}
+
 }
