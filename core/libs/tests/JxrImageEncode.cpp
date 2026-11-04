@@ -87,4 +87,11 @@ int main() {
         Require(encoder->width == 0 && encoder->stream == nullptr);
         free_nid_postfix(encoder);
     }
+    {
+        auto* encoder = NewEncoder();
+        Require(PKImageEncode_SetSize_nid_postfix(encoder, 640, 360) == 0 && encoder->width == 640 && encoder->height == 360);
+        Require(PKImageEncode_SetSize_nid_postfix(encoder, -1, -2) == 0 && encoder->width == 0xffffffff && encoder->height == 0xfffffffe);
+        Require(encoder->currentLine == 0);
+        free_nid_postfix(encoder);
+    }
 }
