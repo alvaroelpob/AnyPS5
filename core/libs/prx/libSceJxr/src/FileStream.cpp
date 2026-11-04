@@ -31,4 +31,10 @@ std::int64_t APS5_VABI ReadWS_File_nid_postfix(Jxr::Stream* stream, void* data, 
     return fread_nid_postfix(data, size, 1, File(stream, __func__)) == 1 ? Success : FileError;
 }
 
+std::int64_t APS5_VABI SetPosWS_File_nid_postfix(Jxr::Stream* stream, std::size_t position) {
+    auto* file = File(stream, __func__);
+    if (fseek_nid_postfix(file, static_cast<std::int64_t>(position), FromStart) != 0) return FileError;
+    return Success;
+}
+
 }

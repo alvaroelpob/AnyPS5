@@ -371,10 +371,6 @@ int APS5_VABI ResetCodingContext_nid_postfix() {
     NotImplemented_nid_no_patch(__func__);
 }
 
-int APS5_VABI SetPosWS_File_nid_postfix() {
-    NotImplemented_nid_no_patch(__func__);
-}
-
 int APS5_VABI SetPosWS_List_nid_postfix() {
     NotImplemented_nid_no_patch(__func__);
 }
