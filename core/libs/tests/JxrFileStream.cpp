@@ -57,4 +57,13 @@ int main() {
         Require(ReadWS_File_nid_postfix(&stream, read.data(), 10) == 0 && read == Data);
         Close(stream);
     }
+    {
+        auto stream = Open("rb");
+        std::uint8_t byte = 0;
+        Require(SetPosWS_File_nid_postfix(&stream, 6) == 0 && ftell_nid_postfix(File(stream)) == 6);
+        Require(ReadWS_File_nid_postfix(&stream, &byte, 1) == 0 && byte == 7);
+        Require(SetPosWS_File_nid_postfix(&stream, 0) == 0 && ReadWS_File_nid_postfix(&stream, &byte, 1) == 0 && byte == 1);
+        Require(SetPosWS_File_nid_postfix(&stream, SIZE_MAX) == -102 && ftell_nid_postfix(File(stream)) == 1);
+        Close(stream);
+    }
 }
