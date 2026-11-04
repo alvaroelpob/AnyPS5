@@ -1,0 +1,27 @@
+#include "prx/libSceJxr/include/Api.hpp"
+#include "prx/libc/include/Api.hpp"
+
+#include <cstddef>
+#include <cstdint>
+#include <stdexcept>
+#include <string>
+
+namespace {
+
+constexpr std::int64_t Success = 0;
+
+Jxr::ImageEncode* Encoder(Jxr::ImageEncode* encoder, const char* function) {
+    if (!encoder) throw std::invalid_argument(std::string(function) + " requires an encoder");
+    return encoder;
+}
+
+}
+
+extern "C" {
+
+std::int64_t APS5_VABI PKImageEncode_SetPixelFormat_nid_postfix(Jxr::ImageEncode* encoder, JxrGuestGuid format) {
+    Encoder(encoder, __func__)->pixelFormat = format;
+    return Success;
+}
+
+}

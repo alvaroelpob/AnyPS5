@@ -317,10 +317,6 @@ int APS5_VABI PKImageEncode_SetPhotoshopMetadata_WMP_nid_postfix() {
     NotImplemented_nid_no_patch(__func__);
 }
 
-int APS5_VABI PKImageEncode_SetPixelFormat_nid_postfix() {
-    NotImplemented_nid_no_patch(__func__);
-}
-
 int APS5_VABI PKImageEncode_SetResolution_nid_postfix() {
     NotImplemented_nid_no_patch(__func__);
 }
