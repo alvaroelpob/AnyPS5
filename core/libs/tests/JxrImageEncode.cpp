@@ -109,4 +109,8 @@ int main() {
         int metadata = 0;
         Require(PKImageEncode_SetDescriptiveMetadata_nid_postfix(nullptr, &metadata) == -2);
     }
+    {
+        std::uint8_t pixels[12] {};
+        Require(PKImageEncode_WritePixels_nid_postfix(nullptr, 1, pixels, 12) == -3);
+    }
 }
