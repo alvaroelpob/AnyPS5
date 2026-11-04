@@ -46,4 +46,15 @@ int main() {
         Require(WriteWS_File_nid_postfix(&stream, Data.data(), 0) == 0);
         Close(stream);
     }
+    {
+        auto stream = Open("rb");
+        std::array<std::uint8_t, 10> read {};
+        Require(ReadWS_File_nid_postfix(&stream, read.data(), 4) == 0 && std::memcmp(read.data(), Data.data(), 4) == 0);
+        Require(ReadWS_File_nid_postfix(&stream, read.data(), 0) == -102);
+        Require(ReadWS_File_nid_postfix(&stream, read.data(), 7) == -102);
+        Close(stream);
+        stream = Open("rb");
+        Require(ReadWS_File_nid_postfix(&stream, read.data(), 10) == 0 && read == Data);
+        Close(stream);
+    }
 }
