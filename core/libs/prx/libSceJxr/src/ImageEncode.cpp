@@ -41,4 +41,8 @@ std::int64_t APS5_VABI PKImageEncode_SetColorContext_nid_postfix(Jxr::ImageEncod
     return NotYetImplemented;
 }
 
+std::int64_t APS5_VABI PKImageEncode_SetDescriptiveMetadata_nid_postfix(Jxr::ImageEncode*, const void*) {
+    return NotYetImplemented;
+}
+
 }
