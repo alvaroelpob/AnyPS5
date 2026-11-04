@@ -85,7 +85,7 @@ int APS5_VABI PKImageDecode_SelectFrame_nid_postfix();
 int APS5_VABI PKImageEncode_CreateNewFrame_nid_postfix();
 int APS5_VABI PKImageEncode_Create_WMP_nid_postfix();
 int APS5_VABI PKImageEncode_Create_nid_postfix();
-int APS5_VABI PKImageEncode_Initialize_nid_postfix();
+std::int64_t APS5_VABI PKImageEncode_Initialize_nid_postfix(Jxr::ImageEncode* encoder, Jxr::Stream* stream, void* parameter, std::size_t size);
 int APS5_VABI PKImageEncode_Release_nid_postfix();
 std::int64_t APS5_VABI PKImageEncode_SetColorContext_nid_postfix(Jxr::ImageEncode* encoder, const std::uint8_t* context, std::uint32_t size);
 std::int64_t APS5_VABI PKImageEncode_SetDescriptiveMetadata_nid_postfix(Jxr::ImageEncode* encoder, const void* metadata);

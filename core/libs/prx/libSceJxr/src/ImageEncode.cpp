@@ -50,4 +50,14 @@ std::int64_t APS5_VABI PKImageEncode_WritePixels_nid_postfix(Jxr::ImageEncode*, 
     return AbstractMethod;
 }
 
+std::int64_t APS5_VABI PKImageEncode_Initialize_nid_postfix(Jxr::ImageEncode* encoder, Jxr::Stream* stream, void*, std::size_t) {
+    Encoder(encoder, __func__)->stream = stream;
+    encoder->pixelFormat = JxrGuest_GUID_PKPixelFormatDontCare_nid_no_patch;
+    encoder->resolutionX = 96;
+    encoder->resolutionY = 96;
+    encoder->frames = 1;
+    if (!stream || !stream->getPosition) throw std::invalid_argument("PKImageEncode_Initialize requires a stream with GetPos");
+    return stream->getPosition(stream, &encoder->start);
+}
+
 }
