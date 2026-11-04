@@ -24,4 +24,10 @@ std::int64_t APS5_VABI PKImageEncode_SetPixelFormat_nid_postfix(Jxr::ImageEncode
     return Success;
 }
 
+std::int64_t APS5_VABI PKImageEncode_SetSize_nid_postfix(Jxr::ImageEncode* encoder, std::int32_t width, std::int32_t height) {
+    Encoder(encoder, __func__)->width = static_cast<std::uint32_t>(width);
+    encoder->height = static_cast<std::uint32_t>(height);
+    return Success;
+}
+
 }
