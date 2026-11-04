@@ -342,13 +342,6 @@ struct LibreSslEvpCipher {
     void* applicationData;
 };
 
-struct LibreSslAsn1String {
-    int length;
-    int type;
-    unsigned char* data;
-    std::int64_t flags;
-};
-
 struct LibreSslOcspResponse {
     Asn1String* responseStatus;
     void* responseBytes;
