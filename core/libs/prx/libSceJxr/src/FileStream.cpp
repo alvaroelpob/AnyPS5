@@ -27,4 +27,8 @@ std::int64_t APS5_VABI WriteWS_File_nid_postfix(Jxr::Stream* stream, const void*
     return Success;
 }
 
+std::int64_t APS5_VABI ReadWS_File_nid_postfix(Jxr::Stream* stream, void* data, std::size_t size) {
+    return fread_nid_postfix(data, size, 1, File(stream, __func__)) == 1 ? Success : FileError;
+}
+
 }
