@@ -8,6 +8,9 @@
 #include <cstdlib>
 #include <cstring>
 #include <source_location>
+#ifdef _WIN32
+#include <windows.h>
+#endif
 
 namespace {
 
@@ -15,6 +18,19 @@ void Require(bool condition, std::source_location location = std::source_locatio
     if (condition) return;
     std::fprintf(stderr, "JXR image encode check failed at line %u\n", location.line());
     std::abort();
+}
+
+template <typename Function>
+Function Exported(Function linked, const char* name) {
+#ifdef _WIN32
+    void* symbol = reinterpret_cast<void*>(GetProcAddress(GetModuleHandleA("libSceJxr.prx"), name));
+    Require(symbol != nullptr);
+    (void)linked;
+    return reinterpret_cast<Function>(symbol);
+#else
+    (void)name;
+    return linked;
+#endif
 }
 
 int liveBlocks = 0;
@@ -140,13 +156,13 @@ int main() {
         zeroedCallsBeforeFailure = 0;
         Require(PKImageEncode_Create_nid_postfix(&encoder) == -101 && encoder == nullptr && liveBlocks == 0);
         Require(PKImageEncode_Create_nid_postfix(&encoder) == 0 && encoder && liveBlocks == 1);
-        Require(encoder->initialize == &PKImageEncode_Initialize_nid_postfix && encoder->setSize == &PKImageEncode_SetSize_nid_postfix);
-        Require(encoder->setPixelFormat == &PKImageEncode_SetPixelFormat_nid_postfix);
-        Require(encoder->setResolution == &PKImageEncode_SetResolution_nid_postfix);
-        Require(encoder->setColorContext == &PKImageEncode_SetColorContext_nid_postfix);
-        Require(encoder->setDescriptiveMetadata == &PKImageEncode_SetDescriptiveMetadata_nid_postfix);
-        Require(encoder->writePixels == &PKImageEncode_WritePixels_nid_postfix && encoder->writeSource == nullptr);
-        Require(encoder->transcode == nullptr && encoder->release == &PKImageEncode_Release_nid_postfix);
+        Require(encoder->initialize == Exported(&PKImageEncode_Initialize_nid_postfix, "PKImageEncode_Initialize_nid_postfix") && encoder->setSize == Exported(&PKImageEncode_SetSize_nid_postfix, "PKImageEncode_SetSize_nid_postfix"));
+        Require(encoder->setPixelFormat == Exported(&PKImageEncode_SetPixelFormat_nid_postfix, "PKImageEncode_SetPixelFormat_nid_postfix"));
+        Require(encoder->setResolution == Exported(&PKImageEncode_SetResolution_nid_postfix, "PKImageEncode_SetResolution_nid_postfix"));
+        Require(encoder->setColorContext == Exported(&PKImageEncode_SetColorContext_nid_postfix, "PKImageEncode_SetColorContext_nid_postfix"));
+        Require(encoder->setDescriptiveMetadata == Exported(&PKImageEncode_SetDescriptiveMetadata_nid_postfix, "PKImageEncode_SetDescriptiveMetadata_nid_postfix"));
+        Require(encoder->writePixels == Exported(&PKImageEncode_WritePixels_nid_postfix, "PKImageEncode_WritePixels_nid_postfix") && encoder->writeSource == nullptr);
+        Require(encoder->transcode == nullptr && encoder->release == Exported(&PKImageEncode_Release_nid_postfix, "PKImageEncode_Release_nid_postfix"));
         Require(encoder->terminate && encoder->createNewFrame && encoder->wmp == 0 && encoder->stream == nullptr);
         Require(encoder->writePixelsBandedBegin(encoder, nullptr) == -3);
         Require(encoder->writePixelsBanded(encoder, 1, nullptr, 0, 1) == -3 && encoder->writePixelsBandedEnd(encoder) == -3);
