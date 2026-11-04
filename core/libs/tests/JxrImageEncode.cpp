@@ -135,4 +135,27 @@ int main() {
         Require(liveBlocks == 1 && PKImageEncode_Release_nid_postfix(&encoder) == 0);
         Require(encoder == nullptr && closed == 1 && liveBlocks == 0);
     }
+    {
+        auto* encoder = reinterpret_cast<Jxr::ImageEncode*>(1);
+        zeroedCallsBeforeFailure = 0;
+        Require(PKImageEncode_Create_nid_postfix(&encoder) == -101 && encoder == nullptr && liveBlocks == 0);
+        Require(PKImageEncode_Create_nid_postfix(&encoder) == 0 && encoder && liveBlocks == 1);
+        Require(encoder->initialize == &PKImageEncode_Initialize_nid_postfix && encoder->setSize == &PKImageEncode_SetSize_nid_postfix);
+        Require(encoder->setPixelFormat == &PKImageEncode_SetPixelFormat_nid_postfix);
+        Require(encoder->setResolution == &PKImageEncode_SetResolution_nid_postfix);
+        Require(encoder->setColorContext == &PKImageEncode_SetColorContext_nid_postfix);
+        Require(encoder->setDescriptiveMetadata == &PKImageEncode_SetDescriptiveMetadata_nid_postfix);
+        Require(encoder->writePixels == &PKImageEncode_WritePixels_nid_postfix && encoder->writeSource == nullptr);
+        Require(encoder->transcode == nullptr && encoder->release == &PKImageEncode_Release_nid_postfix);
+        Require(encoder->terminate && encoder->createNewFrame && encoder->wmp == 0 && encoder->stream == nullptr);
+        Require(encoder->writePixelsBandedBegin(encoder, nullptr) == -3);
+        Require(encoder->writePixelsBanded(encoder, 1, nullptr, 0, 1) == -3 && encoder->writePixelsBandedEnd(encoder) == -3);
+        Require(encoder->setSize(encoder, 8, 4) == 0 && encoder->width == 8 && encoder->height == 4);
+        Jxr::Stream stream {};
+        stream.getPosition = &GetPosition;
+        stream.close = &CloseStream;
+        Require(encoder->initialize(encoder, &stream, nullptr, 0) == 0 && encoder->start == 42);
+        closed = 0;
+        Require(encoder->release(&encoder) == 0 && !encoder && closed == 1 && liveBlocks == 0);
+    }
 }
