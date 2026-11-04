@@ -127,4 +127,12 @@ int main() {
         positionResult = 0;
         free_nid_postfix(encoder);
     }
+    {
+        auto* encoder = NewEncoder();
+        Jxr::Stream stream {};
+        stream.close = &CloseStream;
+        encoder->stream = &stream;
+        Require(liveBlocks == 1 && PKImageEncode_Release_nid_postfix(&encoder) == 0);
+        Require(encoder == nullptr && closed == 1 && liveBlocks == 0);
+    }
 }
