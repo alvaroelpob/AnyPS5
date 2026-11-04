@@ -100,4 +100,9 @@ int main() {
         Require(encoder->resolutionX == 72.5f && encoder->resolutionY == -300.0f && encoder->frames == 0);
         free_nid_postfix(encoder);
     }
+    {
+        const std::uint8_t context[4] {1, 2, 3, 4};
+        Require(PKImageEncode_SetColorContext_nid_postfix(nullptr, context, 4) == -2);
+        Require(PKImageEncode_SetColorContext_nid_postfix(nullptr, nullptr, 0) == -2);
+    }
 }
