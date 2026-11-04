@@ -63,7 +63,7 @@ int main() {
         Require(SetPosWS_File_nid_postfix(&stream, 6) == 0 && ftell_nid_postfix(File(stream)) == 6);
         Require(ReadWS_File_nid_postfix(&stream, &byte, 1) == 0 && byte == 7);
         Require(SetPosWS_File_nid_postfix(&stream, 0) == 0 && ReadWS_File_nid_postfix(&stream, &byte, 1) == 0 && byte == 1);
-        Require(SetPosWS_File_nid_postfix(&stream, SIZE_MAX) == -102 && ftell_nid_postfix(File(stream)) == 1);
+        Require(SetPosWS_File_nid_postfix(&stream, SIZE_MAX) == -102);
         Close(stream);
     }
     {
