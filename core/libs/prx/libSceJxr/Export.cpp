@@ -139,9 +139,6 @@ int APS5_VABI FreeDescMetadata_nid_postfix() {
     NotImplemented_nid_no_patch(__func__);
 }
 
-int APS5_VABI GetPosWS_File_nid_postfix() {
-    NotImplemented_nid_no_patch(__func__);
-}
 
 int APS5_VABI GetPosWS_List_nid_postfix() {
     NotImplemented_nid_no_patch(__func__);
