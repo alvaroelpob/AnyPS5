@@ -73,4 +73,13 @@ int main() {
         Require(SetPosWS_File_nid_postfix(&stream, 9) == 0 && GetPosWS_File_nid_postfix(&stream, &position) == 0 && position == 9);
         Close(stream);
     }
+    {
+        auto stream = Open("rb");
+        std::array<std::uint8_t, 11> read {};
+        Require(EOSWS_File_nid_postfix(&stream) == 0);
+        Require(ReadWS_File_nid_postfix(&stream, read.data(), read.size()) == -102 && EOSWS_File_nid_postfix(&stream) != 0);
+        Require(SetPosWS_File_nid_postfix(&stream, 0) == 0 && EOSWS_File_nid_postfix(&stream) == 0);
+        Close(stream);
+        Require(std::remove(Path) == 0);
+    }
 }
