@@ -66,4 +66,11 @@ int main() {
         Require(SetPosWS_File_nid_postfix(&stream, SIZE_MAX) == -102 && ftell_nid_postfix(File(stream)) == 1);
         Close(stream);
     }
+    {
+        auto stream = Open("rb");
+        std::size_t position = 99;
+        Require(GetPosWS_File_nid_postfix(&stream, &position) == 0 && position == 0);
+        Require(SetPosWS_File_nid_postfix(&stream, 9) == 0 && GetPosWS_File_nid_postfix(&stream, &position) == 0 && position == 9);
+        Close(stream);
+    }
 }
