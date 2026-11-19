@@ -175,6 +175,13 @@ static void TestFloatRect() {
     Require(AlmostEqual(fit2.m_size.m_width, 6.0f));
     Require(AlmostEqual(fit2.m_size.m_height, 8.0f));
 
+    fit2.m_location = fit2p0;
+    _ZN7WebCore9FloatRect11fitToPointsERKNS_10FloatPointES3_(&fit2, fit2.m_location, fit2p1);
+    Require(AlmostEqual(fit2.m_size.m_width, 6.0f));
+    fit2.m_location = fit2p1;
+    _ZN7WebCore9FloatRect11fitToPointsERKNS_10FloatPointES3_(&fit2, fit2p0, fit2.m_location);
+    Require(AlmostEqual(fit2.m_size.m_height, 8.0f));
+
     WebCore::FloatPoint fit3p2{7.0f, 8.0f};
     WebCore::FloatRect fit3;
     _ZN7WebCore9FloatRect11fitToPointsERKNS_10FloatPointES3_S3_(&fit3, fit2p0, fit2p1, fit3p2);

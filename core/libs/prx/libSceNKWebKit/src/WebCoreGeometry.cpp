@@ -264,9 +264,12 @@ void APS5_VABI _ZN7WebCore9FloatRect6extendERKNS_10FloatPointE(WebCore::FloatRec
 
 void APS5_VABI _ZN7WebCore9FloatRect11fitToPointsERKNS_10FloatPointES3_(
     WebCore::FloatRect* self, const WebCore::FloatPoint& p0, const WebCore::FloatPoint& p1) {
-    self->m_location = {std::min(p0.m_x, p1.m_x), std::min(p0.m_y, p1.m_y)};
-    self->m_size = {std::max(p0.m_x, p1.m_x) - self->m_location.m_x,
-                    std::max(p0.m_y, p1.m_y) - self->m_location.m_y};
+    float left = std::min(p0.m_x, p1.m_x);
+    float top = std::min(p0.m_y, p1.m_y);
+    float right = std::max(p0.m_x, p1.m_x);
+    float bottom = std::max(p0.m_y, p1.m_y);
+    self->m_location = {left, top};
+    self->m_size = {right - left, bottom - top};
 }
 
 void APS5_VABI _ZN7WebCore9FloatRect11fitToPointsERKNS_10FloatPointES3_S3_(
